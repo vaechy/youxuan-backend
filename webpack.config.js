@@ -13,7 +13,10 @@ module.exports = {
         clean: true
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.cjs', '.mjs']
+        extensions: ['.ts', '.tsx', '.js', '.jsx', '.cjs', '.mjs', '.styl'],
+        alias: {
+            '@': path.resolve(__dirname, 'src')
+        }
     },
     module: {
         rules: [
@@ -211,7 +214,6 @@ module.exports = {
         }),
     ],
     devtool: isProduction ? false : 'inline-source-map',
-
     optimization: {
         minimize: isProduction,
         splitChunks: {

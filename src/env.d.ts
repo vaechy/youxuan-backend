@@ -2,6 +2,7 @@
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
+
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly NODE_ENV: 'development' | 'production' | 'test';
@@ -24,3 +25,11 @@ declare module '*.module.styl' {
   export default classes;
 }
 // #endregion
+declare module '@/views/*' {
+  const src: any;
+  export default src;
+}
+declare module '@/components/*' {
+  const src: any;
+  export default src;
+}

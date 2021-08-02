@@ -1,8 +1,8 @@
-interface ReqLogin {
+export interface ReqLogin {
   username: string,
   password: string,
 }
-interface ResLogin {
+export interface ResLogin {
   id: number,
   avatar: string,
   username: string,
