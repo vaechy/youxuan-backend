@@ -1,21 +1,11 @@
 import { ServiceProto } from 'tsrpc-proto';
 import { ReqLogin, ResLogin } from './cms/PtlLogin';
-import { ReqAddData, ResAddData } from './PtlAddData';
-import { ReqGetData, ResGetData } from './PtlGetData';
 
 export interface ServiceType {
     api: {
         "cms/Login": {
             req: ReqLogin,
             res: ResLogin
-        },
-        "AddData": {
-            req: ReqAddData,
-            res: ResAddData
-        },
-        "GetData": {
-            req: ReqGetData,
-            res: ResGetData
         }
     },
     msg: {
@@ -24,21 +14,11 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 3,
+    "version": 33,
     "services": [
         {
             "id": 0,
             "name": "cms/Login",
-            "type": "api"
-        },
-        {
-            "id": 1,
-            "name": "AddData",
-            "type": "api"
-        },
-        {
-            "id": 2,
-            "name": "GetData",
             "type": "api"
         }
     ],
@@ -66,132 +46,236 @@ export const serviceProto: ServiceProto<ServiceType> = {
             "type": "Interface",
             "properties": [
                 {
-                    "id": 0,
-                    "name": "id",
+                    "id": 34,
+                    "name": "code",
                     "type": {
                         "type": "Number"
                     }
                 },
                 {
                     "id": 1,
-                    "name": "avatar",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 2,
-                    "name": "username",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 3,
-                    "name": "password",
+                    "name": "msg",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
                     "id": 4,
-                    "name": "email",
+                    "name": "userInfo",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../interface/User/default"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 3,
+                    "name": "access_token",
                     "type": {
                         "type": "String"
-                    }
+                    },
+                    "optional": true
+                }
+            ]
+        },
+        "../interface/User/default": {
+            "type": "Reference",
+            "target": "../interface/User/User"
+        },
+        "../interface/User/User": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "id",
+                    "type": {
+                        "type": "Number"
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 1,
+                    "name": "username",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 2,
+                    "name": "password",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 3,
+                    "name": "email",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
+                },
+                {
+                    "id": 4,
+                    "name": "mobile",
+                    "type": {
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
                 },
                 {
                     "id": 5,
-                    "name": "mobile",
+                    "name": "avatar",
                     "type": {
-                        "type": "String"
-                    }
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "String"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
                 },
                 {
                     "id": 6,
-                    "name": "group_id",
+                    "name": "condition",
                     "type": {
-                        "type": "Number"
-                    }
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Number"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
                 },
                 {
                     "id": 7,
-                    "name": "is_del",
+                    "name": "create_time",
                     "type": {
-                        "type": "Number"
-                    }
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Date"
+                                }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
                 },
                 {
                     "id": 8,
-                    "name": "create_time",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 9,
                     "name": "update_time",
                     "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "PtlAddData/ReqAddData": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "content",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "PtlAddData/ResAddData": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "time",
-                    "type": {
-                        "type": "Date"
-                    }
-                }
-            ]
-        },
-        "PtlGetData/ReqGetData": {
-            "type": "Interface"
-        },
-        "PtlGetData/ResGetData": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 0,
-                    "name": "data",
-                    "type": {
-                        "type": "Array",
-                        "elementType": {
-                            "type": "Interface",
-                            "properties": [
-                                {
-                                    "id": 0,
-                                    "name": "content",
-                                    "type": {
-                                        "type": "String"
-                                    }
-                                },
-                                {
-                                    "id": 1,
-                                    "name": "time",
-                                    "type": {
-                                        "type": "Date"
-                                    }
+                        "type": "Union",
+                        "members": [
+                            {
+                                "id": 0,
+                                "type": {
+                                    "type": "Date"
                                 }
-                            ]
-                        }
-                    }
+                            },
+                            {
+                                "id": 1,
+                                "type": {
+                                    "type": "Literal",
+                                    "literal": null
+                                }
+                            }
+                        ]
+                    },
+                    "optional": true
                 }
             ]
         }

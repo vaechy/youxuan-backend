@@ -6,6 +6,7 @@
     ],
     "module": "esnext",
     "target": "es5",
+    "useDefineForClassFields": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

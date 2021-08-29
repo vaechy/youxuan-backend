@@ -1,6 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+const devMode = process.env.NODE_ENV !== "production";
 const path = require('path');
 
 const isProduction = process.argv.indexOf('--mode=production') > -1;
@@ -13,7 +15,7 @@ module.exports = {
         clean: true
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx', '.cjs', '.mjs', '.styl'],
+        extensions: [".js", ".jsx", ".ts", ".tsx", ".styl", ".css", ".wasm"],
         alias: {
             '@': path.resolve(__dirname, 'src')
         }
@@ -98,7 +100,7 @@ module.exports = {
             {
                 test: /\.styl$/,
                 exclude: /\.module\.styl$/,
-                use: ['style-loader', 'css-loader',
+                use: [ devMode ? "style-loader" : MiniCssExtractPlugin.loader, 'css-loader',
                     {
                         loader: "postcss-loader",
                         options: {
@@ -110,30 +112,10 @@ module.exports = {
                     {
                         loader: "stylus-loader",
                         options: {
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.module\.styl$/,
-                use: ['style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
-                    },
-                    {
-                        loader: "postcss-loader",
-                        options: {
-                            postcssOptions: {
-                                plugins: [["postcss-preset-env"]],
-                            },
-                        },
-                    },
-                    {
-                        loader: "stylus-loader",
-                        options: {
+                            stylusOptions: {
+                                //引入全局mixin
+                                import: [path.resolve(__dirname,'src/stylus/mixins/index.styl')]
+                            }
                         }
                     }
                 ]
@@ -195,6 +177,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new MiniCssExtractPlugin(),
         // Copy "public" to "dist"
         new CopyWebpackPlugin({
             patterns: [{
@@ -230,5 +213,7 @@ module.exports = {
                 }
             }
         }
+    },
+    devServer: {
     },
 }

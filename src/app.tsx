@@ -1,13 +1,16 @@
-import React from "react";
-import Login from '@/views/login';
-import { HashRouter, Route, Link } from "react-router-dom";
-class App extends React.Component{
-  render():any {
+import React, { Suspense } from "react";
+
+import { renderRoutes } from "react-router-config";
+import  routes from "@/router"
+import { HashRouter, Route, BrowserRouter as Router ,Link,NavLink, Redirect,withRouter,Switch} from "react-router-dom";
+class App extends React.Component<any>{
+  
+  render(): any {
     return (
       <HashRouter>
-        <Route path='/login' component={ Login }>
-        </Route>
+          {renderRoutes(routes)}
       </HashRouter>
+      // <RouterPro data={data}/>
     )
   }
 }
