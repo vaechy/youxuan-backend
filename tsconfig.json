@@ -6,6 +6,7 @@
     "module": "commonjs",
     "target": "es2018",
     "outDir": "dist",
+    // "types": ["reflect-metadata", "node"],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

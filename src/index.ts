@@ -1,7 +1,8 @@
 import * as path from "path";
-
-import './db/index'
-
+import 'reflect-metadata';
+import dotenv from 'dotenv'
+dotenv.config()
+import './models/index'
 import { HttpServer } from "tsrpc";
 import { serviceProto } from "./shared/protocols/serviceProto";
 
