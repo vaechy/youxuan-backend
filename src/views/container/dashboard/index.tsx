@@ -8,10 +8,10 @@ interface state { }
  class Dashboard extends React.Component<Props>{
 
   render() {
-    
+    let s = []
     return (
       <>
-          <div>仪表盘</div>
+        <div>仪表盘</div>
       </>
     )
   }

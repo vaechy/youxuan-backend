@@ -1,8 +1,6 @@
-import { makeObservable, observable, computed, action,flow } from "mobx"
-type User = {
-  username?: string | null
-  avatar?:string | null
-}
+import User from "@/shared/interface/User"
+import { makeObservable, observable, computed, action, flow } from "mobx"
+
 export class UserStore {
   userInfo : User
   constructor(userInfo: User) {

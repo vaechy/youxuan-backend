@@ -1,8 +1,12 @@
+import { UserStore } from "@/store/User"
+import { UserList } from "./UserList"
 
-
-
+const userIfon = new UserStore()
 export const  Personal = ()=> {
  
-    return (<div>个人资料</div>)
+    return (<div>
+        <UserList userInfo={ }></UserList>
+
+    </div>)
 }
 

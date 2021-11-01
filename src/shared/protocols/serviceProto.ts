@@ -1,9 +1,19 @@
 import { ServiceProto } from 'tsrpc-proto';
-import { ReqLogin, ResLogin } from './cms/PtlLogin';
+import { ReqAddCmsUser, ResAddCmsUser } from './PtlAddCmsUser';
+import { ReqCmsUserList, ResCmsUserList } from './PtlCmsUserList';
+import { ReqLogin, ResLogin } from './PtlLogin';
 
 export interface ServiceType {
     api: {
-        "cms/Login": {
+        "AddCmsUser": {
+            req: ReqAddCmsUser,
+            res: ResAddCmsUser
+        },
+        "CmsUserList": {
+            req: ReqCmsUserList,
+            res: ResCmsUserList
+        },
+        "Login": {
             req: ReqLogin,
             res: ResLogin
         }
@@ -14,39 +24,38 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
-    "version": 33,
     "services": [
         {
             "id": 0,
-            "name": "cms/Login",
+            "name": "AddCmsUser",
+            "type": "api"
+        },
+        {
+            "id": 1,
+            "name": "CmsUserList",
+            "type": "api"
+        },
+        {
+            "id": 2,
+            "name": "Login",
             "type": "api"
         }
     ],
     "types": {
-        "cms/PtlLogin/ReqLogin": {
+        "PtlAddCmsUser/ReqAddCmsUser": {
+            "type": "Interface"
+        },
+        "PtlAddCmsUser/ResAddCmsUser": {
+            "type": "Interface"
+        },
+        "PtlCmsUserList/ReqCmsUserList": {
+            "type": "Interface"
+        },
+        "PtlCmsUserList/ResCmsUserList": {
             "type": "Interface",
             "properties": [
                 {
                     "id": 0,
-                    "name": "username",
-                    "type": {
-                        "type": "String"
-                    }
-                },
-                {
-                    "id": 1,
-                    "name": "password",
-                    "type": {
-                        "type": "String"
-                    }
-                }
-            ]
-        },
-        "cms/PtlLogin/ResLogin": {
-            "type": "Interface",
-            "properties": [
-                {
-                    "id": 34,
                     "name": "code",
                     "type": {
                         "type": "Number"
@@ -54,35 +63,26 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 1,
-                    "name": "msg",
+                    "name": "message",
                     "type": {
                         "type": "String"
                     }
                 },
                 {
-                    "id": 4,
-                    "name": "userInfo",
+                    "id": 2,
+                    "name": "data",
                     "type": {
-                        "type": "Reference",
-                        "target": "../interface/User/default"
-                    },
-                    "optional": true
-                },
-                {
-                    "id": 3,
-                    "name": "access_token",
-                    "type": {
-                        "type": "String"
+                        "type": "Array",
+                        "elementType": {
+                            "type": "Reference",
+                            "target": "../interface/index/IUser"
+                        }
                     },
                     "optional": true
                 }
             ]
         },
-        "../interface/User/default": {
-            "type": "Reference",
-            "target": "../interface/User/User"
-        },
-        "../interface/User/User": {
+        "../interface/index/IUser": {
             "type": "Interface",
             "properties": [
                 {
@@ -97,68 +97,21 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 1,
                     "name": "username",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
-                    },
-                    "optional": true
+                        "type": "String"
+                    }
                 },
                 {
                     "id": 2,
                     "name": "password",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
-                    },
-                    "optional": true
+                        "type": "String"
+                    }
                 },
                 {
                     "id": 3,
                     "name": "email",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
+                        "type": "String"
                     },
                     "optional": true
                 },
@@ -166,114 +119,70 @@ export const serviceProto: ServiceProto<ServiceType> = {
                     "id": 4,
                     "name": "mobile",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
+                        "type": "String"
                     },
                     "optional": true
                 },
                 {
                     "id": 5,
-                    "name": "avatar",
+                    "name": "desc",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "String"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
+                        "type": "String"
                     },
                     "optional": true
                 },
                 {
                     "id": 6,
-                    "name": "condition",
+                    "name": "conditions",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Number"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
+                        "type": "Number"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "PtlLogin/ReqLogin": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "username",
+                    "type": {
+                        "type": "String"
+                    }
                 },
                 {
-                    "id": 7,
-                    "name": "create_time",
+                    "id": 1,
+                    "name": "password",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Date"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
-                    },
-                    "optional": true
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "PtlLogin/ResLogin": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "code",
+                    "type": {
+                        "type": "Number"
+                    }
                 },
                 {
-                    "id": 8,
-                    "name": "update_time",
+                    "id": 1,
+                    "name": "message",
                     "type": {
-                        "type": "Union",
-                        "members": [
-                            {
-                                "id": 0,
-                                "type": {
-                                    "type": "Date"
-                                }
-                            },
-                            {
-                                "id": 1,
-                                "type": {
-                                    "type": "Literal",
-                                    "literal": null
-                                }
-                            }
-                        ]
+                        "type": "String"
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "data",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../interface/index/IUser"
                     },
                     "optional": true
                 }
