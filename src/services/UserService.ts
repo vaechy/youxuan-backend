@@ -3,6 +3,7 @@ import { UserModel } from '../models'
 //根据用户名查询用户
 export async function findCmsUserByName(username: string): Promise<IUser>{
   const user = await UserModel.findOne({
+    raw:true,
     where: {
       username
   }})

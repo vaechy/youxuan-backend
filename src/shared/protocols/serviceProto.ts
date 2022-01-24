@@ -24,6 +24,7 @@ export interface ServiceType {
 }
 
 export const serviceProto: ServiceProto<ServiceType> = {
+    "version": 2,
     "services": [
         {
             "id": 0,
@@ -179,10 +180,9 @@ export const serviceProto: ServiceProto<ServiceType> = {
                 },
                 {
                     "id": 2,
-                    "name": "data",
+                    "name": "token",
                     "type": {
-                        "type": "Reference",
-                        "target": "../interface/index/IUser"
+                        "type": "String"
                     },
                     "optional": true
                 }

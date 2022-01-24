@@ -1,14 +1,21 @@
 import { ApiCall } from "tsrpc";
 import { ReqLogin, ResLogin } from "../shared/protocols/PtlLogin";
 import { findCmsUserByName } from '../services/UserService'
+import JWT from "../uitls/jwt"
+import jwt from "jsonwebtoken"
 export async function ApiLogin(call: ApiCall<ReqLogin, ResLogin>) {
   const user = await findCmsUserByName(call.req.username)
+  
+  
+  
   if (user) {
+    console.log(user);
+    
     if (user.password === call.req.password) {
       call.succ({
         code: 1,
         message: '登录成功',
-        data: user
+        token: new JWT(user).token
       })
       return
     }
