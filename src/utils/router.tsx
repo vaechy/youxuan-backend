@@ -2,8 +2,9 @@ import React, { Suspense, lazy } from 'react'
 import { Route, Switch, Redirect,RouteComponentProps, SwitchProps, match } from 'react-router-dom'
 import { matchPath, Router } from "react-router"
 import { Location } from 'history';
+console.dir(Router);
 
-interface RouteConfigComponentProps<Params extends { [K in keyof Params]?: string } = {}>
+interface RouteConfigComponentProps<Params extends { [K in keyof Params]?: string } = {}>  
     extends RouteComponentProps<Params> {
     route?: RouteConfig | undefined;
 }
@@ -11,8 +12,8 @@ interface RouteConfig {
     key?: React.Key | undefined;
     location?: Location | undefined;
     component?: React.ComponentType<RouteConfigComponentProps<any>> | React.ComponentType | undefined | JSX.Element | any;
-    path?: string | string[] | undefined;
-    exact?: boolean | undefined;
+    path: string;
+    exact: boolean ;
     strict?: boolean | undefined;
     routes?: RouteConfig[] | undefined;
     render?: ((props: RouteConfigComponentProps<any>) => React.ReactNode) | undefined;
@@ -54,13 +55,13 @@ function matchRoutes<
     Params extends { [K in keyof Params]?: string },
     TRouteConfig extends RouteConfig = RouteConfig
 > (routes: TRouteConfig[], pathname: string, /*not public API*/ branch :any= []) :Array<MatchedRoute<Params, TRouteConfig>>{
-    routes.some(route => {
+  routes.some(route => {
         const match = route.path
             ? matchPath(pathname, route)
             : branch.length
                 ? branch[branch.length - 1].match // use parent match
-                : Router.computeRootMatch(pathname); // use default "root" match
-        
+                : (Router as any).computeRootMatch(pathname); // use default "root" match
+          
                 if (match) {
             branch.push({ route, match });
 

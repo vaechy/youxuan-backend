@@ -2,8 +2,8 @@ import { Avatar as AntAvatar} from 'antd';
 import './index.styl'
 import { Menu, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import router from "@/router"
 import { Link ,useHistory} from "react-router-dom";
+import { Router } from 'react-router-dom'
 
 
 
@@ -26,6 +26,7 @@ export const Avatar = (props: any) => {
       
     </Menu>
   );
+  
   let action = () => {
     
     

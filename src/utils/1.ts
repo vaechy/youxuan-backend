@@ -1,3 +1,4 @@
+export default {}
 // import * as React from 'react';
 // import { RouteComponentProps, SwitchProps, match } from 'react-router';
 // import { Location } from 'history';

@@ -1,15 +1,17 @@
-import React , { useEffect, useState } from 'react';
+import React , { FC, useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox,message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import Header from '@/components/heder';
+// import { useStore } from '@/store/index'
 import { useHistory,NavLink } from "react-router-dom";
 import { client } from '../../utils/request'
-import {  renderRoutes } from "react-router-config"
-// import { UserStore } '@/store/user'
+// mobx function 库
+import { observer } from 'mobx-react-lite'
 import './index.styl'
 
 
-export const Login = (props:any) => {
+export const Login: FC = (props: any) => {
+  let storage = window.localStorage
+  // const user = useStore()
   let [data, setState] = useState({});
   const history =  useHistory()
   let onFinish = async (values: any) => {
@@ -22,17 +24,17 @@ export const Login = (props:any) => {
        // Error
     if (ret.isSucc) {
       message.success(ret.res.message)
-      history.push('/personal')
+      // console.log();
+      if (ret.res.token) {
+        storage['CHYYANXUANTOKEN'] = ret.res.token
+        history.push('/personal')
+      }
+      
       return;
     }
     message.error(ret.err.message)
   };
 
-  const send = async () => {
-    let ret = await client.callApi('Login', { username: 'ssss', password: 'ssss' })
-    // console.log(ret.res);
-    console.log(ret.res);
-  }
   
   return (
     <>
@@ -80,5 +82,5 @@ export const Login = (props:any) => {
     </>
 
   );
-};
+}
 

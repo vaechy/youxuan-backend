@@ -11,6 +11,7 @@ import { Power } from '@/views/container/system/powers';
 import { Menu } from '@/views/container/system/menus';
 import { Category } from '@/views/container/show/category';
 import { Details } from '@/views/container/show/details';
+import { Test } from '@/views/test'
 import { default as Dashboard } from '@/views/container/dashboard';
 import { Container } from "@/views/container"
 //在router的index.js文件中添加嵌套路由对应的组件
@@ -20,6 +21,11 @@ const routes = [
   {
     path: "/login",
     component: Login,
+    exact: false,
+  },
+  {
+    path: "/test",
+    component: Test,
     exact: false,
   },
   {

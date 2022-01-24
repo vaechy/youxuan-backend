@@ -40,7 +40,10 @@ export class Container extends React.Component<any> {
     return (
       <>
        <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse} style={  {overflow: 'auto',
+        height: '100vh',
+        position: 'fixed',
+        left: 0}}>
             <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={defaultSelectedKeys} defaultOpenKeys={ defaultOpenKeys } mode="inline" >
             <Menu.Item key="dashboard" icon={<PieChartOutlined />}>
@@ -79,12 +82,13 @@ export class Container extends React.Component<any> {
           <Header className="site-layout-background" style={{ padding: 0 }}>
                 <Avatar></Avatar>
           </Header>
-          <Content style={{ margin: '0 16px' }}>
+          <Content style={{ margin: '0 16px',overflow:'initial' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                
                 <Suspense fallback="">{renderRoutes(this.props.route.routes)}</Suspense>
               </div>
           </Content>
