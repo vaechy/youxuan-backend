@@ -1,7 +1,10 @@
 // import { useStore } from '@/store/index'
 import React, { useEffect, useState } from 'react';
+import { client } from '@/utils/request'
+import config from  '@/config/index'
 import { useQuery } from "react-query"
-import { Formik } from 'formik';
+import { Formik } from 'formik'
+import { Alert } from 'antd'
 import './index.styl'
 import {
   Form,
@@ -9,6 +12,7 @@ import {
   Checkbox,
   Button,
 } from 'antd';
+import { IUser } from '@/shared/interface';
 
 
 
@@ -35,32 +39,32 @@ const tailFormItemLayout = {
   },
 };
 export const Personal = () => {
-  useQuery('user', async () => {
-    return 
-  })
-  const s = 's'
-    // const userStore = useStore()
-    // const { getUser} = useStore()
-
-
-  
   // useEffect(() => {
-  //   console.log('dddd');
-  // }, [userStore.getUser[0]])
-  
-  const fu = function () {
-    
-  }
-  
-  
-    
+  //   (async () => {
+  //     let ret = await client.callApi('TokenLogin', { token: window.localStorage.getItem(config.tokenName) || '' })
+  //       console.log(ret.res);
+        
+      
+  //    })()
+  // },[])
+  const { data,isLoading,isError,status,error} = useQuery('user', async () => {
+    let ret = await client.callApi('TokenLogin', { token: window.localStorage.getItem(config.tokenName) || '' })
+    if (ret.isSucc) {
+      return ret.res.userInfo
+    } else {
+      throw new Error(ret.err.message)
+    }
+  })
+  if (isLoading) return <div>{ `---`}</div>
+ 
+  if (error) return <div>{`${error}`}</div>
   return (<div className='personal'>
-    {/* <button onClick={fu} style={{width:'100%',backgroundColor:'pink'}}>{ userStore.getUser[0].username}111</button> */}
-    <div ></div>
-    {/* <Formik
-      initialValues={{ username:userStore.getUser[0].username || '',password:userStore.getUser[0].password || ''}}
+    <div>{ status}</div>
+    <Formik
+      initialValues={{ username:(data as IUser).username,password: (data as IUser).password}}
+      // initialValues={{ username:'VAECHY',password: '123456'}}
       onSubmit={(values, { setSubmitting }) => {
-        userStore.setUser(values)
+        // console.log(values);
       }}
     >
       {({ values,handleChange,handleSubmit}) => {
@@ -75,20 +79,14 @@ export const Personal = () => {
             tooltip="What do you want others to call you?"
             rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
           >
-              <Input name='username' value={values.username} onChange={ handleChange}/>
-              
-              
+              <Input name='username' value={values.username} onChange={ handleChange}/>     
           </Form.Item>
           <Form.Item
             label="Password"
             tooltip="What do you want others to call you?"
           >
-            <Input.Password name='password' value={values.password} onChange={ handleChange}/>
-              
-              
+            <Input.Password name='password' value={values.password} onChange={ handleChange}/>   
           </Form.Item>
-     
-    
           <Form.Item {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">
               保存
@@ -96,7 +94,7 @@ export const Personal = () => {
           </Form.Item>
         </Form>)
       } }
-    </Formik> */}
+    </Formik>
     </div>)
 }
 

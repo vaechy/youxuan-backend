@@ -2,17 +2,15 @@ import { Avatar as AntAvatar} from 'antd';
 import './index.styl'
 import { Menu, Dropdown } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Link ,useHistory} from "react-router-dom";
-import { Router } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Router, useNavigate } from 'react-router-dom'
 
 
 
 export const Avatar = (props: any) => {
-  let history  = useHistory()
+  let navigate  = useNavigate()
   const exit = () => {
-    history.push('/login')
-    console.log('退出成功');
-    
+    navigate('/login')
   }
   const menu = (
     <Menu key="1">
@@ -20,8 +18,7 @@ export const Avatar = (props: any) => {
         <Link  to="/personal">个人资料</Link>
       </Menu.Item>
       <Menu.Item key="3">
-        {/* ddd */}
-        <div onClick={ exit}>退出登录</div>
+        <div onClick={ exit }>退出登录</div>
       </Menu.Item>
       
     </Menu>

@@ -2,6 +2,7 @@ import { ServiceProto } from 'tsrpc-proto';
 import { ReqAddCmsUser, ResAddCmsUser } from './PtlAddCmsUser';
 import { ReqCmsUserList, ResCmsUserList } from './PtlCmsUserList';
 import { ReqLogin, ResLogin } from './PtlLogin';
+import { ReqTokenLogin, ResTokenLogin } from './PtlTokenLogin';
 
 export interface ServiceType {
     api: {
@@ -16,6 +17,10 @@ export interface ServiceType {
         "Login": {
             req: ReqLogin,
             res: ResLogin
+        },
+        "TokenLogin": {
+            req: ReqTokenLogin,
+            res: ResTokenLogin
         }
     },
     msg: {
@@ -39,6 +44,11 @@ export const serviceProto: ServiceProto<ServiceType> = {
         {
             "id": 2,
             "name": "Login",
+            "type": "api"
+        },
+        {
+            "id": 3,
+            "name": "TokenLogin",
             "type": "api"
         }
     ],
@@ -185,6 +195,31 @@ export const serviceProto: ServiceProto<ServiceType> = {
                         "type": "String"
                     },
                     "optional": true
+                }
+            ]
+        },
+        "PtlTokenLogin/ReqTokenLogin": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "token",
+                    "type": {
+                        "type": "String"
+                    }
+                }
+            ]
+        },
+        "PtlTokenLogin/ResTokenLogin": {
+            "type": "Interface",
+            "properties": [
+                {
+                    "id": 0,
+                    "name": "userInfo",
+                    "type": {
+                        "type": "Reference",
+                        "target": "../interface/index/IUser"
+                    }
                 }
             ]
         }

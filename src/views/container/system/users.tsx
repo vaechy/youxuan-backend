@@ -1,6 +1,7 @@
-import { Container } from"@/views/container"
+import { Container } from "@/views/container"
+import Taber from '@/components/table/index'
 export const User = () => {
   return (
-      <div>用户管理</div>
+    <div><Taber /></div>
   )
 }
